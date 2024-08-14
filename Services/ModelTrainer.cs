@@ -9,7 +9,11 @@ namespace psittacus.Services
         public static ITransformer TrainModel(MLContext mlContext, string dataPath)
         {
             // Load data from the CSV file
-            var dataView = mlContext.Data.LoadFromTextFile<UserQuery>(dataPath, hasHeader: true);
+            IDataView dataView = mlContext.Data.LoadFromTextFile<UserQuery>(
+                path: dataPath,
+                hasHeader: true,
+                separatorChar: ',');
+
             var dataPreview = dataView.Preview(); // Preview data to debug
             Console.WriteLine("Data preview:");
             foreach (var row in dataPreview.RowView)

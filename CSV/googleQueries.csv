@@ -1,0 +1,10 @@
+Text,Label
+"What are the diving conditions like?","DivingConditionsQuery"
+"Show me the weather forecast.","DivingConditionsQuery"
+"What's the best time to go diving?","DivingConditionsQuery"
+"Is the weather nice enough to go diving?","DivingConditionsQuery"
+"How's the visibility underwater?","DivingConditionsQuery"
+"What's the wave height today?","DivingConditionsQuery"
+"How's the weather for diving?","DivingConditionsQuery"
+"Can I go diving this weekend?","DivingConditionsQuery"
+"Can I go spearfishing this weekend?","DivingConditionsQuery"

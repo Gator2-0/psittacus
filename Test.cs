@@ -3,7 +3,7 @@ using psittacus.Services;
 using System;
 using psittacus.Models;
 
-class Test
+/*class Test
 {
     static void Main(string[] args)
     {
@@ -27,4 +27,4 @@ class Test
         Console.WriteLine($"Predicted Label: {prediction.PredictedLabel}");
     }
 }
-
+*/
