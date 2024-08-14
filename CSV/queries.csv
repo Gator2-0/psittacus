@@ -1,0 +1,9 @@
+﻿Text,Label
+"What are the diving conditions like?", "DivingConditionsQuery"
+"Show me the weather forecast.", "WeatherForecastQuery"
+"What's the best time to go diving?", "DivingConditionsQuery"
+"Tell me the current temperature.", "WeatherForecastQuery"
+"How's the visibility underwater?", "DivingConditionsQuery"
+"What's the wave height today?", "DivingConditionsQuery"
+"Do I need an umbrella today?", "WeatherForecastQuery"
+"How's the weather for diving?", "DivingConditionsQuery"
