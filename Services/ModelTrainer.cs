@@ -1,5 +1,6 @@
 ﻿using Microsoft.ML;
 using psittacus.Models;
+using System;
 
 namespace psittacus.Services
 {
@@ -9,6 +10,12 @@ namespace psittacus.Services
         {
             // Load data from the CSV file
             var dataView = mlContext.Data.LoadFromTextFile<UserQuery>(dataPath, hasHeader: true);
+            var dataPreview = dataView.Preview(); // Preview data to debug
+            Console.WriteLine("Data preview:");
+            foreach (var row in dataPreview.RowView)
+            {
+                Console.WriteLine(string.Join(", ", row.Values.Select(v => v.Value)));
+            }
 
             // Define a pipeline for training
             var pipeline = mlContext.Transforms.Text.FeaturizeText("Features", nameof(UserQuery.Text))
