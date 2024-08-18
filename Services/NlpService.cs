@@ -1,35 +1,41 @@
 ﻿using Microsoft.ML;
 using Microsoft.ML.Data;
 using psittacus.Models;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace psittacus.Services
 {
     public class NlpService
     {
         private readonly PredictionEngine<UserQuery, QueryPrediction> _predictionEngine;
+        private readonly HttpClient _httpClient;
 
-        public NlpService(PredictionEngine<UserQuery, QueryPrediction> predictionEngine)
+        public NlpService(PredictionEngine<UserQuery, QueryPrediction> predictionEngine, HttpClient httpClient)
         {
             _predictionEngine = predictionEngine;
+            _httpClient = httpClient;
         }
 
-        public string ProcessQuery(string input)
+        public async Task<NlpResponse> ProcessQuery(string input)
         {
             var prediction = _predictionEngine.Predict(new UserQuery { Text = input });
             string label = prediction.PredictedLabel;
-
-            string result = string.Empty;
+            label = label.Trim('\"');  // Removes surrounding quotes
+            Console.WriteLine("Label: " + label);
+            object result = null;
 
             switch (label) 
             {
                 case "DivingConditionsQuery":
-                    FetchDivingConditions();
-                    result = "diving";
+                    result = await FetchDivingConditions();
+                    
                     break;
 
                 case "WeatherForecastQuery":
-                    FetchWeatherForecast();
-                    result = "weather";
+     
+                    result = "Unknown";
                     break;
 
                 case "unknownQuery":
@@ -43,13 +49,40 @@ namespace psittacus.Services
                     result = "unknown";
                     break;
             }
-            return result;
+            return new NlpResponse { Label = label, Data = result };
         }
 
-        private void FetchDivingConditions()
+        private async Task<List<WeatherCondition>> FetchDivingConditions()
         {
             // Call your API or perform actions to get diving conditions
             Console.WriteLine("Fetching diving conditions...");
+            string apiUrl = "https://localhost:7116/DivingControllers/divingForecast";
+            try 
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+                response.EnsureSuccessStatusCode();
+                Console.WriteLine("FetchDivingConditions(), response: " + response.Content);
+
+                /*List <WeatherCondition> weatherConditions = await response.Content.ReadFromJsonAsync<List<WeatherCondition>>(); ;
+
+                Console.WriteLine("FetchWeatherConditions(), response:");
+                foreach (var condition in weatherConditions)
+                {
+                    Console.WriteLine($"{condition.Date.ToShortDateString()}: {condition.Condition} at {condition.Temperature}°C");
+                }*/
+
+                List <WeatherCondition> weatherConditions = await response.Content.ReadFromJsonAsync<List<WeatherCondition>>();
+                Console.WriteLine(weatherConditions);
+
+                return weatherConditions;
+            }
+            catch(HttpRequestException e) 
+            {
+                Console.WriteLine("Request error:");
+                Console.WriteLine(e.Message);
+                return new List<WeatherCondition>() ; // Return an empty list on error
+            }
+            
         }
 
         private void FetchWeatherForecast()

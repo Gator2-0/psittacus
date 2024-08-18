@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
 
 // Add ML.NET and NLP service
 var mlContext = new MLContext();
@@ -27,7 +28,7 @@ var modelPath = "D:\\Project-Alfred\\modelTraining\\bin\\Debug\\net8.0\\psittacu
 ITransformer trainedModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
 var predictionEngine = mlContext.Model.CreatePredictionEngine<UserQuery, QueryPrediction>(trainedModel);
 
-builder.Services.AddSingleton(new NlpService(predictionEngine));
+builder.Services.AddSingleton(new NlpService(predictionEngine, builder.Services.BuildServiceProvider().GetRequiredService<HttpClient>()));
 
 var app = builder.Build();
 
@@ -44,7 +45,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors("AllowSpecificOrigins"); // Apply CORS policy 
+app.UseCors("AllowReactApp"); // Apply CORS policy 
 
 app.UseAuthorization();
 

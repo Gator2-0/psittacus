@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("psittacus")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b49e73ed7ba77136a3128abe54a49813aeabc6be")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a524c133498a77ec57373393ed2601a693dc8d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("psittacus")]
 [assembly: System.Reflection.AssemblyTitleAttribute("psittacus")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

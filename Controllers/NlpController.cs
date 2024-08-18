@@ -2,7 +2,7 @@
 using psittacus.Services;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class NlpController : ControllerBase
 {
     private readonly NlpService _nlpService;
@@ -13,9 +13,11 @@ public class NlpController : ControllerBase
     }
 
     [HttpPost("process-query")]
-    public IActionResult ProcessQuery([FromBody] string query)
+    public async Task<IActionResult> ProcessQuery([FromBody] string query)
     {
-        var result = _nlpService.ProcessQuery(query);
+        Console.WriteLine("API controller query: " + query);
+        var result = await _nlpService.ProcessQuery(query);
+        Console.WriteLine(result);
         return Ok(result);
     }
 }
