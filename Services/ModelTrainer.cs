@@ -30,7 +30,7 @@ namespace psittacus.Services
 
             // Train the model
             var model = pipeline.Fit(dataView);
-
+            Console.WriteLine(model.ToString());
             return model;
         } 
     }

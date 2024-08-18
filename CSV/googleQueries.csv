@@ -8,3 +8,6 @@ Text,Label
 "How's the weather for diving?","DivingConditionsQuery"
 "Can I go diving this weekend?","DivingConditionsQuery"
 "Can I go spearfishing this weekend?","DivingConditionsQuery"
+"What is the length of a piece of rope?", "unknownQuery"
+"Do I need an umbrella today?","unknownQuery"
+"How big is a dog?", "unknownQuery"

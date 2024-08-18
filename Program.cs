@@ -23,8 +23,9 @@ builder.Services.AddSwaggerGen();
 
 // Add ML.NET and NLP service
 var mlContext = new MLContext();
-var model = ModelTrainer.TrainModel(mlContext, "./CSV/queries.csv"); // Adjust path if necessary
-var predictionEngine = mlContext.Model.CreatePredictionEngine<UserQuery, QueryPrediction>(model);
+var modelPath = "D:\\Project-Alfred\\modelTraining\\bin\\Debug\\net8.0\\psittacusModel.zip";
+ITransformer trainedModel = mlContext.Model.Load(modelPath, out var modelInputSchema);
+var predictionEngine = mlContext.Model.CreatePredictionEngine<UserQuery, QueryPrediction>(trainedModel);
 
 builder.Services.AddSingleton(new NlpService(predictionEngine));
 
